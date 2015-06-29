@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>Feeds</h1>
+  <% if session[:name] %>
+    <%= "Welcome #{session[:name]}" if session[:name]%><br><br>
+    <a href="/users/<%=session[:id]%>"> View Profile</a>
+    <a href="/users/<%=session[:id]%>/edit"> Edit Profile</a>
+    <a href="/users/<%=session[:id]%>/delete"> Delete Profile</a><br><br>
+    <a href="/users/logout"> Logout </a>
+  <% end %><br><br>
+
+<h3>New Feed</h3>
+  <form action="/statuses" method="post">
+    What's on your mind?<br><br>
+    <input type="text" name="status[feeling]" size="30" placeholder="Feeling"></input><br>
+    <input type="text" name="status[comment]" size="30" placeholder="Comment"></input><br><br>
+    <input type="text" name="tag[name]" size="30" placeholder="Tag"></input><br><br>
+    <input type="hidden" name="status[user_id]" value=<%=session[:id]%></input>
+    <input type="submit" value="Post"></input>
+  </form>
+
+<h3>Recent Feeds</h3>
+<% if params[:msg] %>
+  <tr><td><%= params[:msg] %></td></tr><br><br>
+<% end %>
+
+<% @statuses.each do |s| %>
+  <table>
+    <col width="630">
+    <col width="800">
+    <tr><%=s.user.name%>
+    <%=s.created_at.strftime("%m/%d/%Y")%>
+    <%=s.created_at.strftime("%H:%M:%S")%>
+    Feeling...<%= s.feeling %></tr>
+    <tr><td><%= s.comment %></td></tr>
+    <tr><td><a href="/statuses/<%=s.id%>/likes"> [Like] </a>
+    <a href="/statuses/<%=s.id%>/comments"> [Comment] </a></td></tr>
+    <tr><td><%= "#{s.likes.count} likes" if s.likes.count != 0 %>
+            <%= "#{s.comments.count} comments" if s.comments.count != 0 %>
+    </td></tr>
+    <% if session[:id] == s.user_id %>
+    <tr><td><a href="/statuses/<%=s.id%>/edit"> [Edit] </a>
+    <a href="/statuses/<%=s.id%>/delete"> [Delete] </a></td></tr>
+    <% end %>
+  </table>
+  <br><br>
+<% end %>
+
+</div>
+

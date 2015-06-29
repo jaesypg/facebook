@@ -1,0 +1,11 @@
+<div>
+  <h3>Edit Status page</h3>
+  <form action="/statuses/<%=@status.id%>" method="post">
+    <input type="hidden" name="_method" value="put">
+    Feeling: <input type="text" name="status[feeling]" size="30" value="<%=@status.feeling%>"><br>
+    Comment: <input type="text" name="status[comment]" size="30" value="<%=@status.comment%>"><br>
+    <input type="hidden" name="status[user_id]" value="<%=@status.user_id%>"><br>
+    <a href="/statuses"> Back </a>
+    <input type="submit" value="Edit Status"></input>
+  </form>
+</div>

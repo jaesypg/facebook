@@ -1,0 +1,11 @@
+<div>
+  <h3>Delete Comment page</h3>
+  <form action="/comments/<%=@comment.id%>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    Comment: <input type="text" name="comment[comment]" size="30" value="<%=@comment.comment%>"><br>
+    <input type="hidden" name="comment[status_id]" value="<%=@comment.status_id%>"><br>
+     <input type="hidden" name="comment[user_id]" value="<%=@comment.user_id%>"><br>
+    <a href="/statuses"> Back </a>
+    <input type="submit" value="Delete Comment"></input>
+  </form>
+</div>

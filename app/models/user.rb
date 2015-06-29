@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   # Remember to create a migration!
   # e.g., User.authenticate('josh@codedivision.com', 'apples123')
+  has_many :statuses
+  has_many :likes
   def self.authenticate(email, password)
     # if email and password correspond to a valid user, return that user
     # otherwise, return nil

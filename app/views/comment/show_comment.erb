@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Feeds</h1>
+  <% if session[:name] %>
+    <%= "Welcome #{session[:name]}" if session[:name]%><br><br>
+    <a href="/users/<%=session[:id]%>"> View Profile</a>
+    <a href="/users/<%=session[:id]%>/edit"> Edit Profile</a>
+    <a href="/users/<%=session[:id]%>/delete"> Delete Profile</a><br><br>
+    <a href="/users/logout"> Logout </a>
+  <% end %><br><br>
+
+<% @comments.each do |c| %>
+  <table>
+    <col width="630">
+    <col width="800">
+    <tr>
+    <%= @user = User.find(c.user_id) %>
+    <%=c.user_id %>
+    <%=@user.name %>
+    <%=c.created_at.strftime("%m/%d/%Y")%>
+    <%=c.created_at.strftime("%H:%M:%S")%></tr>
+    <tr><td><%= c.comment %></td></tr>
+    <% if session[:id] == c.user_id %>
+    <tr><td><a href="/comments/<%=c.id%>/edit"> [Edit] </a>
+    <a href="/comments/<%=c.id%>/delete"> [Delete] </a></td></tr>
+    <% end %>
+  </table>
+  <br><br>
+<% end %>
+
+  <form action="/comments" method="post">
+     <input type="hidden" name="comment[status_id]" value=<%= params[:id] %>></input><br>
+    <input type="hidden" name="comment[user_id]" size="30" value=<%= session[:id]%>></input><br><br>
+    Comment: <input type="text" name="comment[comment]" size="30" placeholder="Enter your comment here..."></input>
+    <input type="submit" value="Add Comment"></input>
+  </form><br><br>
+  <a href="/statuses"> Back </a>
+
+</div>
+
